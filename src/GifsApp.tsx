@@ -2,22 +2,25 @@ import { CustomHeader } from "./shared/components/CustomHeader";
 import { SearchBar } from "./shared/components/SearchBar";
 import { PreviousSearches } from "./gifs/components/PreviousSearches";
 import { GifsList } from "./gifs/components/GifsList";
-import { mockGifs } from "./mock-data/gifs.mock";
 import { useState } from "react";
+import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.action";
+import type { Gif } from "./gifs/interfaces/gif";
 
 export const GifsApp = () => {
-  const [previousTerms, setPreviousTerms] = useState([
-    "pacific rim",
-    "toy Story",
-    "raccoon",
-  ]);
+  const [gifs, setGifs] = useState<Gif[]>([])
+  const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
   const handleTermClicked = (term: string) => {
     console.log({ term });
   };
 
-  const handleSearch = (query: string) => {
-    console.log(query);
+  const handleSearch = async (query: string = '') => {
+    const clean_query = query.trim().toLowerCase();
+    if (clean_query == '') return;
+    if (previousTerms.includes(clean_query)) return;
+    setPreviousTerms([clean_query, ...previousTerms.slice(0, 7)]);
+    const gifs = await getGifsByQuery(query);
+    setGifs(gifs);
   };
 
   return (
@@ -31,7 +34,7 @@ export const GifsApp = () => {
       {/* Search */}
       <SearchBar 
         onQuery={handleSearch} 
-        placeholder="Busca loque quieras" 
+        placeholder="Busca el Gif ideal" 
       />
 
       {/* Búsquedas previas */}
@@ -41,7 +44,7 @@ export const GifsApp = () => {
       />
 
       {/* Gifs */}
-      <GifsList gifs={mockGifs} />
+      <GifsList gifs={gifs} />
     </>
   );
 };
