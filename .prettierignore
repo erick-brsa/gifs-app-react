@@ -1,0 +1,21 @@
+# Artefactos de construcción
+node_modules/
+dist/
+build/
+.pnpm-store/
+
+# Cobertura de pruebas e historial
+coverage/
+.next/
+.svelte-kit/
+
+# Archivos de bloqueo de dependencias (evita conflictos en Git)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+*.log
+.env
+.env.local
+.DS_Store
