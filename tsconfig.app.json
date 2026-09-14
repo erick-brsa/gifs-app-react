@@ -22,5 +22,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "src/shared/components/CustomHeader.tsx", "src/shared/components/SearchBar.tsx", "test/shared/components/CustomHeader.test.tsx"]
 }
